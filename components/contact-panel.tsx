@@ -60,7 +60,7 @@ export function ContactPanel({ contacts }: { contacts: ContactLink[] }) {
                   <span style={{ color: `color-mix(in oklab, ${tone} 60%, rgba(209,213,219,0.6))` }}>{item.label}</span>
                   <Link
                     href={item.href}
-                    className="transition-colors duration-[var(--transition-base)] hover:opacity-85"
+                    className="transition-colors duration-(--transition-base) hover:opacity-85"
                     style={linkStyle}
                     rel="noopener noreferrer"
                   >
@@ -77,7 +77,7 @@ export function ContactPanel({ contacts }: { contacts: ContactLink[] }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, transition: { delay: 0.4, duration: 0.6 } }}
       >
-        Provided for informational purposes—please no commission requests.
+        Provided for informational purposes<br />may or may not take commissions, who knows?.
       </motion.p>
     </div>
   );

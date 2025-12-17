@@ -1,7 +1,7 @@
-import type { ButtonHTMLAttributes } from "react";
+import type react from "react";
 import { cn } from "@/lib/utils";
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = react.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "default" | "outline";
   size?: "sm" | "md";
 };
@@ -22,7 +22,7 @@ export function Button({ className, variant = "default", size = "md", ...props }
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center rounded-full uppercase tracking-[0.3em] transition duration-[var(--transition-base)]",
+        "inline-flex items-center justify-center rounded-full uppercase tracking-[0.3em] transition duration-(--transition-base)",
         variantMap[variant],
         sizeMap[size],
         className,

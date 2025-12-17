@@ -41,7 +41,7 @@ export function Hero() {
         variants={nameVariants}
       >
         <motion.span className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
-          Engineering notebooks
+          Engineering notebook
         </motion.span>
         <motion.h1
           className="text-5xl font-medium uppercase tracking-[0.24em] text-foreground sm:text-6xl md:text-7xl"
