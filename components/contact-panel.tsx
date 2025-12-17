@@ -41,7 +41,7 @@ export function ContactPanel({ contacts }: { contacts: ContactLink[] }) {
         animate={{ opacity: 1, y: 0, transition: { delay: 0.15, duration: 0.55, ease: smoothEase } }}
       >
         <Card className="border-border/60 bg-muted/30 p-0" style={{ "--card-accent": "var(--term-magenta)" } as CSSProperties}>
-          <CardHeader className="px-6 pt-6 text-left">
+          <CardHeader className="px-6 pt-6 text-center sm:text-left">
             <CardTitle>Reference channels</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 border-t border-border/50 px-6 py-6 text-xs uppercase tracking-[0.3em] text-muted-foreground/80">

@@ -106,8 +106,7 @@ export function MainNav() {
               )}
               style={isActive ? {
                 color: item.tone,
-                boxShadow: `0 0 0 1px ${item.tone}, 0 10px 24px -16px ${item.tone}`,
-                backgroundColor: "color-mix(in oklab, var(--background) 75%, transparent)",
+                // boxShadow: `0 0 0 0px ${item.tone}, 0 5px -24px -14px ${item.tone}`,
               } : undefined}
             >
               <Icon className="h-5 w-5" strokeWidth={1.7} style={isActive ? { color: item.tone } : undefined} />
