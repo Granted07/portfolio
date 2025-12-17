@@ -36,7 +36,7 @@ export function Footer() {
       </div>
       <div className="mx-auto mt-8 flex w-full max-w-5xl justify-between text-[10px] uppercase tracking-[0.28em]">
         <span>© {new Date().getFullYear()} Anjishnu Dey</span>
-        <span>Engineered with Next.js & Tailwind CSS v4</span>
+        <span className="text-right">Engineered with Next.js & Tailwind CSS v4</span>
       </div>
     </footer>
   );

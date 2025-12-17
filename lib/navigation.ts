@@ -5,10 +5,11 @@ export type NavigationItem = {
   href: string;
   label: string;
   icon: LucideIcon;
+  tone: string;
 };
 
 export const navigation: NavigationItem[] = [
-  { href: "/", label: "Home", icon: Home },
-  { href: "/projects", label: "Projects", icon: Archive },
-  { href: "/contact", label: "Contact", icon: Mail },
+  { href: "/", label: "Home", icon: Home, tone: "var(--term-blue)" },
+  { href: "/projects", label: "Projects", icon: Archive, tone: "var(--term-magenta)" },
+  { href: "/contact", label: "Contact", icon: Mail, tone: "var(--term-green)" },
 ];

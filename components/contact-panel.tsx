@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { CSSProperties } from "react";
 
 export type ContactLink = {
   label: string;
@@ -13,6 +14,13 @@ export type ContactLink = {
 const smoothEase: [number, number, number, number] = [0.16, 1, 0.3, 1];
 
 export function ContactPanel({ contacts }: { contacts: ContactLink[] }) {
+  const accentPalette = [
+    "var(--term-blue)",
+    "var(--term-magenta)",
+    "var(--term-green)",
+    "var(--term-yellow)",
+  ];
+
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-10 text-center">
       <motion.div
@@ -32,23 +40,35 @@ export function ContactPanel({ contacts }: { contacts: ContactLink[] }) {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0, transition: { delay: 0.15, duration: 0.55, ease: smoothEase } }}
       >
-        <Card className="border-border/60 bg-muted/30 p-0">
+        <Card className="border-border/60 bg-muted/30 p-0" style={{ "--card-accent": "var(--term-magenta)" } as CSSProperties}>
           <CardHeader className="px-6 pt-6 text-left">
             <CardTitle>Reference channels</CardTitle>
           </CardHeader>
           <CardContent className="grid gap-4 border-t border-border/50 px-6 py-6 text-xs uppercase tracking-[0.3em] text-muted-foreground/80">
-            {contacts.map((item) => (
-              <div key={item.label} className="flex flex-col items-center gap-2 text-center sm:flex-row sm:justify-between sm:text-left">
-                <span>{item.label}</span>
-                <Link
-                  href={item.href}
-                  className="text-foreground transition-colors duration-[var(--transition-base)] hover:text-muted-foreground"
-                  rel="noopener noreferrer"
+            {contacts.map((item, index) => {
+              const tone = accentPalette[index % accentPalette.length];
+              const linkStyle: CSSProperties = {
+                color: tone,
+                textShadow: `0 6px 22px ${tone}`,
+              };
+
+              return (
+                <div
+                  key={item.label}
+                  className="flex flex-col items-center gap-2 text-center sm:flex-row sm:justify-between sm:text-left"
                 >
-                  {item.value}
-                </Link>
-              </div>
-            ))}
+                  <span style={{ color: `color-mix(in oklab, ${tone} 60%, rgba(209,213,219,0.6))` }}>{item.label}</span>
+                  <Link
+                    href={item.href}
+                    className="transition-colors duration-[var(--transition-base)] hover:opacity-85"
+                    style={linkStyle}
+                    rel="noopener noreferrer"
+                  >
+                    {item.value}
+                  </Link>
+                </div>
+              );
+            })}
           </CardContent>
         </Card>
       </motion.div>

@@ -31,8 +31,8 @@ const orbitTags = ["Systems", "Fullstack", "Security"];
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-[68vh] flex-col items-center justify-center overflow-hidden rounded-[40px] border border-border/80 bg-muted/30 px-6 text-center shadow-(--shadow-soft)">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(113,113,122,0.12),transparent_60%)]" />
+    <section className="relative flex min-h-[68vh] flex-col items-center justify-center overflow-hidden rounded-[40px] border-3 border-border bg-muted/60 px-6 text-center shadow-(--shadow-soft)">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(113,113,122,0.12),transparent_80%)]" />
       {/* <BackgroundRippleEffect /> */}
       <motion.div
         className="relative z-0 flex flex-col items-center gap-6"
@@ -69,13 +69,13 @@ export function Hero() {
         >
           <Link
             href="/projects"
-            className="rounded-full border border-border px-4 py-2 transition-colors duration-[var(--transition-base)] hover:border-foreground hover:text-foreground"
+            className="rounded-full border border-border px-4 py-2 transition-colors duration-(--transition-base) hover:border-foreground hover:text-foreground"
           >
             Projects
           </Link>
           <Link
             href="/contact"
-            className="rounded-full border border-border px-4 py-2 transition-colors duration-[var(--transition-base)] hover:border-foreground hover:text-foreground"
+            className="rounded-full border border-border px-4 py-2 transition-colors duration-(--transition-base) hover:border-foreground hover:text-foreground"
           >
             Contact
           </Link>
