@@ -9,9 +9,9 @@ import { profile } from "@/lib/profile";
 gsap.registerPlugin(ScrollTrigger);
 const NAME = "anjishnu dey";
 const contacts = [
-  { k: "mail", v: profile.email, href: `mailto:${profile.email}`, color: "var(--green)" },
-  { k: "linkedin", v: "anjishnu-dey", href: profile.linkedin, color: "var(--blue)" },
-  { k: "instagram", v: "granted.api", href: "https://instagram.com/granted.api", color: "var(--magenta)" },
+  { k: "mail", v: profile.email, href: `mailto:${profile.email}`, color: "#0dbc79" },
+  { k: "linkedin", v: "anjishnu-dey", href: profile.linkedin, color: "#2472c8" },
+  { k: "instagram", v: "granted.api", href: "https://instagram.com/granted.api", color: "#bc3fbc" },
 ];
 
 export default function Home() {
@@ -74,7 +74,7 @@ export default function Home() {
       </section>
 
       <section id="research" className="flex min-h-screen flex-col justify-center px-6 py-24 md:px-24">
-        <p className="rv text-sm" style={{ color: "var(--green)" }}>● running</p>
+        <p className="rv text-sm" style={{ color: "#0dbc79" }}>● running</p>
         <h2 className="rv mt-4 max-w-5xl text-3xl font-medium leading-tight tracking-tight md:text-6xl">
           gpu scheduling for hosted neural-network inference
         </h2>
@@ -85,7 +85,7 @@ export default function Home() {
           </div>
           <pre className="rv overflow-x-auto border border-white/15 p-5 text-xs leading-6 text-foreground/80 md:text-sm">{research.code}</pre>
         </div>
-        <a href={research.href} target="_blank" rel="noreferrer" className="rv mt-10 w-fit border-b pb-1" style={{ color: "var(--green)", borderColor: "var(--green)" }}>cat README →</a>
+        <a href={research.href} target="_blank" rel="noreferrer" className="rv mt-10 w-fit border-b pb-1" style={{ color: "#0dbc79", borderColor: "#0dbc79" }}>cat README →</a>
       </section>
 
       <section id="work" className="pin relative h-screen overflow-hidden">

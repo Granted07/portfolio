@@ -1,6 +1,6 @@
 export type Chapter = { name: string; path: string; ext: string; href: string; color: string; lines: string[]; code: string };
 
-const C = { r: "var(--red)", g: "var(--green)", y: "var(--yellow)", b: "var(--blue)", m: "var(--magenta)", c: "var(--cyan)" };
+const C = { r: "#cd3131", g: "#0dbc79", y: "#e5e510", b: "#2472c8", m: "#bc3fbc", c: "#11a8cd" };
 
 export const research = {
   href: "https://github.com/Granted07/DES_GPUQueueingModel",

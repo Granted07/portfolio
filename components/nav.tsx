@@ -5,7 +5,7 @@ export function Nav() {
       <a href="#top" className="text-foreground">~/anjishnu</a>
       <ul className="flex gap-5 md:gap-8">
         {items.map((i) => (
-          <li key={i}><a href={`#${i}`} className="text-dim transition-colors hover:text-[var(--green)]">{i}</a></li>
+          <li key={i}><a href={`#${i}`} className="text-dim transition-colors hover:text-[#0dbc79]">{i}</a></li>
         ))}
       </ul>
     </nav>
