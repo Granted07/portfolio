@@ -72,5 +72,5 @@ export function Seats() {
       renderer.domElement.remove();
     };
   }, []);
-  return <div ref={host} aria-hidden className="pointer-events-none fixed inset-0 z-0 opacity-40" />;
+  return <div ref={host} aria-hidden className="pointer-events-none fixed inset-0 z-0 opacity-15" />;
 }
