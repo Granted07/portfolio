@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -39,6 +40,9 @@ function formations() {
 
 export function Field() {
   const host = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  const onHome = useRef(true);
+  onHome.current = pathname === "/";
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -85,9 +89,21 @@ export function Field() {
     const pts = new THREE.Points(geo, mat);
     scene.add(pts);
 
-    let target = 0, cur = 0;
+    let target = 0, cur = 0, visible = false;
+    el.style.opacity = "0";
     const st = ScrollTrigger.create({ start: 0, end: "max", onUpdate: (s) => (target = s.progress) });
+
     const tick = (t: number) => {
+      // visible only on the landing page, and only once the research section
+      // has completely scrolled out of the viewport (its bottom edge is above the top)
+      const research = document.getElementById("research");
+      const want = onHome.current && !!research && research.getBoundingClientRect().bottom <= 0;
+      if (want !== visible) {
+        visible = want;
+        el.style.opacity = want ? "0.25" : "0";
+      }
+      if (!visible) return; // no rendering at all while hidden
+
       cur += (target - cur) * 0.06;
       mat.uniforms.uP.value = cur;
       mat.uniforms.uT.value = t;
@@ -95,6 +111,8 @@ export function Field() {
       pts.rotation.x = Math.sin(cur * Math.PI) * 0.5;
       renderer.render(scene, cam);
     };
+
+
     gsap.ticker.add(tick);
     const resize = () => {
       renderer.setSize(innerWidth, innerHeight);
@@ -114,5 +132,11 @@ export function Field() {
     };
   }, []);
 
-  return <div ref={host} aria-hidden className="pointer-events-none fixed inset-0 z-0 opacity-25" />;
+  return (
+    <div
+      ref={host}
+      aria-hidden
+      className="pointer-events-none fixed inset-0 z-0 transition-opacity duration-700"
+    />
+  );
 }

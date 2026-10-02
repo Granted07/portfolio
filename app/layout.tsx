@@ -3,6 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { Field } from "@/components/field";
+import { Crumb } from "@/components/crumb";
 
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
 
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={`${mono.variable} bg-background text-foreground`}>
         <SmoothScroll>
+          <Crumb />
           <Field />
           <main className="relative z-10">{children}</main>
         </SmoothScroll>

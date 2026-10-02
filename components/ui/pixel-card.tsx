@@ -147,16 +147,25 @@ const VARIANTS = {
     speed: 80,
     colors: '#fecdd3,#fda4af,#e11d48',
     noFocus: true
+  },
+  terminal: {
+    activeColor: '#0dbc79',
+    gap: 8,
+    speed: 30,
+    colors: '#0dbc79,#0a8f5d,#075f3d',
+    noFocus: true
   }
 };
 
 interface PixelCardProps {
-  variant?: 'default' | 'blue' | 'yellow' | 'pink';
+  variant?: 'default' | 'blue' | 'yellow' | 'pink' | 'terminal';
   gap?: number;
   speed?: number;
   colors?: string;
   noFocus?: boolean;
   className?: string;
+  style?: React.CSSProperties;
+  id?: string;
   children: React.ReactNode;
 }
 
@@ -175,6 +184,8 @@ export default function PixelCard({
   colors,
   noFocus,
   className = '',
+  style,
+  id,
   children
 }: PixelCardProps): JSX.Element {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -239,8 +250,7 @@ export default function PixelCard({
     let allIdle = true;
     for (let i = 0; i < pixelsRef.current.length; i++) {
       const pixel = pixelsRef.current[i];
-      // @ts-ignore
-      pixel[fnName]();
+      (pixel as unknown as Record<string, () => void>)[String(fnName)]();
       if (!pixel.isIdle) {
         allIdle = false;
       }
@@ -285,19 +295,24 @@ export default function PixelCard({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [finalGap, finalSpeed, finalColors, finalNoFocus]);
 
+  const cssVars = {
+    ...(variantCfg.activeColor ? { '--pixel-card-active-color': variantCfg.activeColor } : {}),
+    ...style,
+  } as React.CSSProperties;
+
   return (
     <section
-    
+      id={id}
       ref={containerRef}
       className={`pixel-card ${className}`}
+      style={cssVars}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onFocus={finalNoFocus ? undefined : onFocus}
       onBlur={finalNoFocus ? undefined : onBlur}
       tabIndex={finalNoFocus ? -1 : 0}
-      id="research"
     >
-      <canvas className="pixel-canvas " ref={canvasRef} />
+      <canvas className="pixel-canvas" ref={canvasRef} aria-hidden />
       {children}
     </section>
   );

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Scramble } from "@/components/scramble";
@@ -40,12 +41,12 @@ export function Flow() {
   }, []);
 
   return (
-    <div ref={root} className="relative bg-[#050806]">
+    <div ref={root} className="relative">
       <Seats />
       <p id="hud" className="fixed bottom-6 right-6 z-20 text-xs" />
       <div className="relative z-10">
         <section className="flex min-h-screen flex-col justify-end px-6 pb-16 md:px-16">
-          <p className="hi text-dim"><Scramble text="granted07@kolkata:~/lab$ cat gamma" /></p>
+          <p className="hi text-dim"><Scramble text="granted07@kolkata:~/research$ cat gamma" /></p>
           <h1 className="hi mt-6 max-w-6xl text-[clamp(2.2rem,8vw,7rem)] font-medium leading-[.95] tracking-tighter">
             How long would you wait for a fuller ferry?
           </h1>
@@ -79,7 +80,7 @@ export function Flow() {
             <p key={o} className="op flex gap-4 text-xl md:text-3xl"><span style={{ color: "#e5e510" }}>?</span>{o}</p>
           ))}
           <p className="op mt-10 flex gap-8 text-sm">
-            <a href="/" className="text-dim hover:text-white">← home</a>
+            <Link href="/#research" className="text-dim hover:text-white">← home</Link>
             <a href="https://github.com/Granted07/DES_GPUQueueingModel" target="_blank" rel="noreferrer" style={{ color: "#0dbc79" }}>read the code →</a>
           </p>
         </section>

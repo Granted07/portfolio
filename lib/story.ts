@@ -3,7 +3,8 @@ export type Chapter = { name: string; path: string; ext: string; href: string; c
 const C = { r: "#cd3131", g: "#0dbc79", y: "#e5e510", b: "#2472c8", m: "#bc3fbc", c: "#11a8cd" };
 
 export const research = {
-  href: "https://anjishnudey.tech/current",
+  href: "/current",
+  teaser: "A GPU answers in groups. How long should it wait for a fuller ferry?",
   lines: [
     "Research on reducing latency when neural networks are served on GPUs.",
     "Requests are modelled as a queue with batching, a finite buffer and cache hits.",
