@@ -1,35 +1,79 @@
-export type Chapter = { name: string; path: string; ext: string; href: string; lines: string[] };
+export type Chapter = { name: string; path: string; ext: string; href: string; color: string; lines: string[]; code: string };
+
+const C = { r: "var(--red)", g: "var(--green)", y: "var(--yellow)", b: "var(--blue)", m: "var(--magenta)", c: "var(--cyan)" };
+
+export const research = {
+  href: "https://github.com/Granted07/DES_GPUQueueingModel",
+  lines: [
+    "Research on reducing latency when neural networks are served on GPUs.",
+    "Requests are modelled as a queue with batching, a finite buffer and cache hits.",
+    "Service times are measured on a real GPU and fed back into the simulator.",
+  ],
+  code: `M / G(a,b) / 1 / N
+  arrivals   exp(λ)
+  service    gamma(μ(b), cov 0 · .5 · 1.4)
+  batch b    1 2 4 8 16 32 64   # googlenet, onnx runtime cuda
+  out        latency · blocking · little's law`,
+};
 
 export const chapters: Chapter[] = [
   {
-    name: "chess-engine", path: "~/chess-engine", ext: "py",
-    href: "https://github.com/Granted07/Chess-Engine-Python",
-    lines: ["from scratch. no library to blame.", "press t. the board changes its mind.", "castling works. en passant, ask me how.", "the opponent is still on its way."],
+    name: "gpu-queue", path: "~/DES_GPUQueueingModel", ext: "c", color: C.g,
+    href: "https://github.com/Granted07/DES_GPUQueueingModel",
+    lines: ["A discrete event simulator for scheduling task arrivals at an approximated rate.", "Research work on neural network service latency optimisation."],
+    code: "static Event heap[MAX_EVENTS]; // fixed storage\nsim_run(&cfg, seed); // → csv",
   },
   {
-    name: "p2pchat", path: "~/p2pchat", ext: "cpp",
+    name: "nn-in-c", path: "~/NeuralNetworkInC", ext: "c", color: C.y,
+    href: "https://github.com/Granted07/NeuralNetworkInC",
+    lines: ["A neural network library written in C.", "Matrices, layers and backpropagation, built from scratch."],
+    code: "z = W x + b\na = act(z)\nW -= lr * dL/dz * xᵀ",
+  },
+  {
+    name: "p2pchat", path: "~/p2pchat", ext: "cpp", color: C.c,
     href: "https://github.com/Granted07/p2pchat",
-    lines: ["two machines. nobody in the middle.", "the router had to be talked into it.", "upnp: a door that opens if you ask right."],
+    lines: ["A chat app where two computers talk directly, with no server in between.", "Uses UPnP to open the port on the router."],
+    code: "upnp_map(port, \"TCP\");\nconnect(peer);",
   },
   {
-    name: "jimnios", path: "~/jimnios", ext: "arch",
+    name: "chess-engine", path: "~/chess-engine", ext: "py", color: C.m,
+    href: "https://github.com/Granted07/Chess-Engine-Python",
+    lines: ["A chess engine in Python, written without any chess library.", "Handles castling and en passant."],
+    code: "moves = legal(board)\nboard.push(best(moves))",
+  },
+  {
+    name: "mc-console", path: "~/mc-console", ext: "ts", color: C.b,
+    href: "https://github.com/Granted07/mc-console",
+    lines: ["A web console for a Minecraft server.", "Streams the server log live and sends commands to it through tmux."],
+    code: "tail(log) → ws → ansi\ncmd → auth → tmux send-keys",
+  },
+  {
+    name: "jimnios", path: "~/jimnios", ext: "arch", color: C.r,
     href: "https://github.com/JimniOS",
-    lines: ["a linux for students. arch underneath.", "named after a fruit. dressed in its colour.", "i was the designer."],
+    lines: ["A Linux distribution for students, based on Arch.", "I was the designer."],
+    code: "pacman -S student",
   },
   {
-    name: "genuprising", path: "~/genuprising", ext: "ts",
+    name: "genuprising", path: "~/genuprising", ext: "ts", color: C.g,
     href: "https://genuprising.com",
-    lines: ["an advocacy hub. articles landing back to back.", "it could not afford to be slow.", "under 200ms. the edge did the lifting."],
+    lines: ["Website for an advocacy group that publishes many articles in quick succession.", "Caching and edge functions keep it loading in under 200ms."],
+    code: "cache → edge → 200ms",
   },
   {
-    name: "repak-rebnk", path: "~/repak-rebnk", ext: "rs",
+    name: "repak-rebnk", path: "~/repak-rebnk", ext: "rs", color: C.y,
     href: "https://github.com/Granted07/repak-rebnk",
-    lines: ["someone else's rust. i went in anyway.", "unreal engine pak files, cracked open.", "forked on purpose."],
+    lines: ["A fork of a Rust tool for Unreal Engine pak files.", "Opens and inspects game archives."],
+    code: "pak.unpack(&mut out)?;",
   },
 ];
 
-export const others = [
-  { name: "anime-scraper", note: "scrapes shows off gogoanime", href: "https://github.com/Granted07/anime-scraper" },
-  { name: "animdl", note: "a fork. downloads, streams", href: "https://github.com/Granted07/animdl" },
-  { name: "dots", note: "where this terminal came from", href: "https://github.com/Granted07/dots" },
+export const repos = [
+  { name: "DES_GPUQueueingModel", tag: "research", color: C.g, note: "GPU inference queue simulator", href: "https://github.com/Granted07/DES_GPUQueueingModel" },
+  { name: "NeuralNetworkInC", tag: "library", color: C.y, note: "neural network library in C", href: "https://github.com/Granted07/NeuralNetworkInC" },
+  { name: "p2pchat", tag: "network", color: C.c, note: "peer-to-peer chat", href: "https://github.com/Granted07/p2pchat" },
+  { name: "mc-console", tag: "tool", color: C.b, note: "web console for a minecraft vps", href: "https://github.com/Granted07/mc-console" },
+  { name: "genu-website", tag: "web", color: C.m, note: "the genuprising site", href: "https://github.com/Granted07/genu-website" },
+  { name: "anicli", tag: "cli", color: C.r, note: "anime, from the terminal", href: "https://github.com/Granted07/anicli" },
+  { name: "K-Folio", tag: "fork", color: C.m, note: "project-wing 2026, web domain", href: "https://github.com/Granted07/K-Folio" },
+  { name: "dots", tag: "config", color: C.c, note: "where this terminal came from", href: "https://github.com/Granted07/dots" },
 ];

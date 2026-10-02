@@ -114,5 +114,5 @@ export function Field() {
     };
   }, []);
 
-  return <div ref={host} aria-hidden className="pointer-events-none fixed inset-0 z-0 opacity-70" />;
+  return <div ref={host} aria-hidden className="pointer-events-none fixed inset-0 z-0 opacity-25" />;
 }

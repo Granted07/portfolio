@@ -1,6 +1,8 @@
 @import "tailwindcss";
-:root{color-scheme:dark;--bg:#000;--fg:#ededed;--dim:#707070}
+:root{color-scheme:dark;--bg:#000;--fg:#ededed;--dim:#707070;
+--red:#cd3131;--green:#0dbc79;--yellow:#e5e510;--blue:#2472c8;--magenta:#bc3fbc;--cyan:#11a8cd}
 @theme inline{--font-mono:var(--font-jetbrains);--color-background:var(--bg);--color-foreground:var(--fg);--color-dim:var(--dim)}
+html{scroll-behavior:auto}
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 body{background:var(--bg);color:var(--fg);font-family:var(--font-jetbrains),ui-monospace,monospace;-webkit-font-smoothing:antialiased}
