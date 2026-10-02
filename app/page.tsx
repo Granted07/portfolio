@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Scramble } from "@/components/scramble";
 import { chapters, repos, research } from "@/lib/story";
 import { profile } from "@/lib/profile";
+// import PixelCard from '@/components/ui/pixel-card';
 
 gsap.registerPlugin(ScrollTrigger);
 const NAME = "anjishnu dey";
@@ -73,20 +74,25 @@ export default function Home() {
         <p className="cursor mt-24 text-sm">cd ~/research</p>
       </section>
 
-      <section id="research" className="flex min-h-screen flex-col justify-center px-6 py-24 md:px-24">
-        <p className="rv text-sm" style={{ color: "#0dbc79" }}>● running</p>
-        <h2 className="rv mt-4 max-w-5xl text-3xl font-medium leading-tight tracking-tight md:text-6xl">
-          gpu scheduling for hosted neural-network inference
-        </h2>
-        <div className="rule mt-10 h-px w-full origin-left bg-white/30" />
-        <div className="mt-10 grid gap-10 md:grid-cols-2">
-          <div className="space-y-4 text-lg md:text-2xl">
-            {research.lines.map((l) => <p key={l} className="rv">{l}</p>)}
+
+
+
+      {/* <PixelCard className="flex min-h-screen flex-col justify-center px-6 py-24 md:px-24" variant="pink"> */}
+        <section id="research" className="flex min-h-screen flex-col justify-center px-6 py-24 md:px-24">
+          <p className="rv text-sm" style={{ color: "#0dbc79" }}>● running</p>
+          <h2 className="rv mt-4 max-w-5xl text-3xl font-medium leading-tight tracking-tight md:text-6xl">
+            gpu scheduling for hosted neural-network inference
+          </h2>
+          <div className="rule mt-10 h-px w-full origin-left bg-white/30" />
+          <div className="mt-10 grid gap-10 md:grid-cols-2">
+            <div className="space-y-4 text-lg md:text-2xl">
+              {research.lines.map((l) => <p key={l} className="rv">{l}</p>)}
+            </div>
+            <pre className="rv overflow-x-auto border border-white/15 p-5 text-xs leading-6 text-foreground/80 md:text-sm">{research.code}</pre>
           </div>
-          <pre className="rv overflow-x-auto border border-white/15 p-5 text-xs leading-6 text-foreground/80 md:text-sm">{research.code}</pre>
-        </div>
-        <a href={research.href} target="_blank" rel="noreferrer" className="rv mt-10 w-fit border-b pb-1" style={{ color: "#0dbc79", borderColor: "#0dbc79" }}>cat README →</a>
-      </section>
+          <a href={research.href} target="_blank" rel="noreferrer" className="rv mt-10 w-fit border-b pb-1" style={{ color: "#0dbc79", borderColor: "#0dbc79" }}>cat current_project →</a>
+        </section>
+      {/* </PixelCard> */}
 
       <section id="work" className="pin relative h-screen overflow-hidden">
         <div className="track flex h-full w-max">
