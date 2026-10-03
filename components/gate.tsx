@@ -11,9 +11,10 @@ const GREENS = ["#0dbc79", "#0a8f5d", "#075f3d"]; // same palette as PixelCard
 const DARK = "#020604";
 const OFF = "#1a1a1a";
 const seatColor = (p: number) => (p < 0.6 ? "#0dbc79" : p < 0.85 ? "#e5e510" : "#cd3131"); // same thresholds as the deck HUD
-
+const CYN = ["#11a8cd", "#0d82a0", "#095a70"];
 const RED = ["#cd3131", "#8f2323", "#5f1717"];
 const YEL = ["#e5e510", "#a8a80b", "#6f6f07"];
+const BLU = ["#2472c8", "#1a5494", "#113963"];
 type Boot = { cmd: string; lines: string[]; dir: "fill" | "drain"; pal?: string[]; board?: boolean };
 
 // a knight visits every square once (Warnsdorff); the loader is that walk
@@ -37,6 +38,10 @@ const boots: Record<string, Boot> = {
   "/projects/chess-engine>/": { cmd: "cd ~", lines: ["board folded", "pieces back in the box"], dir: "drain", pal: RED, board: true },
   "/projects/neural-network-in-c": { cmd: "cmake --build build && ctest", lines: ["matrices allocated", "weights in [-1, 1]", "all tests passed"], dir: "fill", pal: YEL },
   "/projects/neural-network-in-c>/": { cmd: "network_free(network);", lines: ["layers freed", "memory returned"], dir: "drain", pal: YEL },
+  "/projects/p2pchat": { cmd: "cd ~/p2pchat && ./p2pchat", lines: ["checking UPnP...", "asking the router for a door", "connected"], dir: "fill", pal: CYN },
+  "/projects/p2pchat>/": { cmd: "exit", lines: ["receiver joined", "sockets closed"], dir: "drain", pal: CYN },
+  "/projects/mc-console": { cmd: "cd ~/mc-console && npm start", lines: ["tailing session.log", "token required", "listening on :3000"], dir: "fill", pal: BLU },
+  "/projects/mc-console>/": { cmd: "tmux detach", lines: ["sockets closed", "session still running"], dir: "drain", pal: BLU },
 };
 const fallback: Boot = { cmd: "cd ..", lines: ["one moment"], dir: "fill" };
 
@@ -214,7 +219,7 @@ export function Gate() {
   }, [pathname]);
 
   return (
-    <div ref={ov} data-lenis-prevent aria-hidden style={{ display: "none" }} className="fixed inset-0 z-[70] bg-transparent">
+    <div ref={ov} data-lenis-prevent aria-hidden style={{ display: "none" }} className="fixed inset-0 z-70 bg-transparent">
       <canvas ref={cv} className="absolute inset-0 h-full w-full" />
       <div ref={term} className="absolute bottom-0 left-0 w-full px-6 pb-16 text-sm opacity-0 md:px-16">
         <p className="cursor text-foreground"><span className="text-dim">granted07@kolkata:~$ </span><span ref={cmdEl} /></p>
@@ -226,7 +231,7 @@ export function Gate() {
             <span key={i} ref={(el) => { if (el) boardEls.current[i] = el; }} className="aspect-square" />
           ))}
         </div>
-        <div ref={seatWrap} className="mt-6 flex max-w-lg gap-[3px]">
+        <div ref={seatWrap} className="mt-6 flex max-w-lg gap-0.75">
           {Array.from({ length: SEATS }, (_, i) => (
             <span key={i} ref={(el) => { if (el) seatEls.current[i] = el; }} className="h-3 flex-1" style={{ background: OFF }} />
           ))}

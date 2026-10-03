@@ -62,7 +62,7 @@ export function Sweep({ ctl }: { ctl: Ctl }) {
 
   return (
     <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-16 md:grid-cols-[1.3fr_1fr] md:px-16">
-      <div className="aspect-[4/3] w-full border border-white/15 bg-black/50">
+      <div className="aspect-4/3 w-full border border-white/15 bg-black/50">
         <Canvas dpr={[1, 2]} camera={{ position: [0, 4, 9], fov: 40 }} style={{ touchAction: "pan-y" }}>
           <Bars cells={cells} max={max} pick={setSel} sel={sel} />
           <OrbitControls enableZoom={false} enablePan={false} />

@@ -38,13 +38,13 @@ export const chapters: Chapter[] = [
   },
   {
     name: "p2pchat", path: "~/p2pchat", ext: "cpp", color: C.c,
-    href: "https://github.com/Granted07/p2pchat",
+    href: "/projects/p2pchat",
     lines: ["Connects two computers directly, with no server in between.", "It asks the router to open a port using UPnP."],
     code: "upnp_map(port, \"TCP\");\nconnect(peer);",
   },
   {
     name: "mc-console", path: "~/mc-console", ext: "ts", color: C.b,
-    href: "https://github.com/Granted07/mc-console",
+    href: "/projects/mc-console",
     lines: ["A web page that shows a Minecraft server's log live and lets you send it commands.", "Each command passes a login token, a rate limit and input cleaning before it reaches the server."],
     code: "log → websocket → browser\ncommand → checks → tmux send-keys",
   },

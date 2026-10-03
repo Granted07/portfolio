@@ -63,7 +63,7 @@ export function Flow() {
           <div className="packet absolute left-3 z-10 h-3 w-3 -translate-x-1/2 bg-white md:left-1/2" />
           {steps.map((s, i) => (
             <article key={s.tag} className={`node relative pl-10 md:w-1/2 md:pl-0 ${i % 2 ? "md:ml-auto md:pl-16" : "md:pr-16 md:text-right"}`}>
-              <span data-c={s.color} className={`dot absolute top-3 h-2 w-2 bg-[#333] left-[8px] ${i % 2 ? "md:left-[-4px]" : "md:left-auto md:right-[-4px]"}`} />
+              <span data-c={s.color} className={`dot absolute top-3 h-2 w-2 bg-[#333] left-2 ${i % 2 ? "md:-left-1" : "md:left-auto md:-right-1"}`} />
               <div className="body">
                 <p className="text-sm" style={{ color: s.color }}>{s.tag}</p>
                 <h2 className="mt-3 text-3xl font-medium tracking-tight md:text-5xl">{s.title}</h2>

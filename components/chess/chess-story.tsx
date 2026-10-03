@@ -169,7 +169,7 @@ export function ChessStory() {
 
           <div className="flex flex-col gap-5 text-sm">
             <p className="text-lg">{status || (busy ? "thinking…" : "white to move")}</p>
-            <pre className="min-h-[7.5rem] border-l-2 bg-black/60 px-4 py-3 leading-6 text-foreground/80" style={{ borderColor: RED }}>
+            <pre className="min-h-30 border-l-2 bg-black/60 px-4 py-3 leading-6 text-foreground/80" style={{ borderColor: RED }}>
 {hud ? `depth ${hud.depth}   score ${hud.score >= 0 ? "+" : ""}${hud.score}
 nodes ${fmt(hud.nodes)}
 cutoffs ${fmt(hud.cutoffs)}   tt ${fmt(hud.ttHits)}

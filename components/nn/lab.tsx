@@ -89,7 +89,7 @@ export function Lab({ H, sizes, hidden, onHidden }: Props) {
   return (
     <div className="mx-auto grid w-full max-w-6xl gap-10 px-6 py-16 md:grid-cols-[1.1fr_1fr] md:px-16">
       <div>
-        <div className="aspect-[4/3] w-full border border-white/15 bg-black/50">
+        <div className="aspect-4/3 w-full border border-white/15 bg-black/50">
           <NetScene H={H} sizes={sizes} probe={probe} orbit />
         </div>
         <p className="mt-3 text-xs text-dim">Green lines are positive weights, red are negative. Light moving along a line is input × weight. Drag to rotate.</p>

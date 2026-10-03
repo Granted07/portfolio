@@ -33,7 +33,7 @@ export function Backprop() {
           </li>
         ))}
       </ol>
-      <div className="flex min-h-[18rem] flex-col gap-6">
+      <div className="flex min-h-72 flex-col gap-6">
         <div className="flex gap-3" aria-label="Values the layer cached on the way forward">
           {["x", "z", "a", "W"].map((k) => (
             <motion.span key={k} animate={{ opacity: s.reads.includes(k) ? 1 : 0.25, scale: s.reads.includes(k) ? 1.15 : 1, borderColor: s.reads.includes(k) ? Y : "#333" }} className="flex h-10 w-10 items-center justify-center border text-sm">{k}</motion.span>
