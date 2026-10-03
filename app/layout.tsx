@@ -4,6 +4,7 @@ import "./globals.css";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { Field } from "@/components/field";
 import { Crumb } from "@/components/crumb";
+import { Gate } from "@/components/gate";
 
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Crumb />
           <Field />
           <main className="relative z-10">{children}</main>
+          <Gate />
         </SmoothScroll>
       </body>
     </html>
