@@ -10,7 +10,11 @@ type Props = {
   children: React.ReactNode;
 };
 
-type Px = { x: number; y: number; col: string; d: number; s: number; m: number };
+type Px = { x: number; y: number; col: string; d: number; s: number; m: number; a: number };
+
+// Pixel opacity at the very top and bottom edge, and in the middle.
+// FADE is how much of the height (from each edge) the blend takes.
+const EDGE = 0, MID = 0.6, FADE = 0.4;
 
 // Pixel field behind the content. The canvas is absolutely positioned with
 // utility classes, so it can never push content around, and it sits behind
@@ -41,8 +45,11 @@ export default function PixelCard({
       c.height = h;
       px = [];
       for (let x = 0; x < w; x += gap)
-        for (let y = 0; y < h; y += gap)
-          px.push({ x, y, col: colors[(Math.random() * colors.length) | 0], d: Math.hypot(x - w / 2, y - h / 2), s: 0, m: 1 + Math.random() * 2 });
+        for (let y = 0; y < h; y += gap) {
+          const k = Math.min(1, Math.min(y, h - y) / (h * FADE));
+          const a = EDGE + (MID - EDGE) * k * k * (3 - 2 * k);
+          px.push({ x, y, col: colors[(Math.random() * colors.length) | 0], d: Math.hypot(x - w / 2, y - h / 2), s: 0, m: 1 + Math.random() * 2, a });
+        }
       maxD = Math.hypot(w / 2, h / 2) * 1.2;
       if (dir > 0 && !raf) raf = requestAnimationFrame(frame);
     };
@@ -56,6 +63,7 @@ export default function PixelCard({
         if (p.s < target) { p.s = Math.min(target, p.s + 0.12); moving = true; }
         else if (p.s > target) { p.s = Math.max(target, p.s - 0.12); moving = true; }
         if (p.s > 0.05) {
+          ctx.globalAlpha = p.a;
           ctx.fillStyle = p.col;
           ctx.fillRect(p.x, p.y, p.s, p.s);
         }
@@ -95,7 +103,7 @@ export default function PixelCard({
 
   return (
     <section id={id} ref={box} className={`relative isolate overflow-hidden ${className}`}>
-      <canvas ref={cv} aria-hidden className="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-50" />
+      <canvas ref={cv} aria-hidden className="pointer-events-none absolute inset-0 -z-10 h-full w-full" />
       {children}
     </section>
   );
