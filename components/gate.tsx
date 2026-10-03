@@ -12,10 +12,26 @@ const DARK = "#020604";
 const OFF = "#1a1a1a";
 const seatColor = (p: number) => (p < 0.6 ? "#0dbc79" : p < 0.85 ? "#e5e510" : "#cd3131"); // same thresholds as the deck HUD
 
-type Boot = { cmd: string; lines: string[]; dir: "fill" | "drain" };
+const RED = ["#cd3131", "#8f2323", "#5f1717"];
+type Boot = { cmd: string; lines: string[]; dir: "fill" | "drain"; pal?: string[]; board?: boolean };
+
+// a knight visits every square once (Warnsdorff); the loader is that walk
+const TOUR = (() => {
+  const nb = (s: number) => [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]].map(([r, c]) => [(s >> 3) + r, (s & 7) + c]).filter(([r, c]) => r >= 0 && r < 8 && c >= 0 && c < 8).map(([r, c]) => r * 8 + c);
+  const seen = new Set([0]), path = [0];
+  for (let s = 0; path.length < 64;) {
+    const free = (x: number) => nb(x).filter((y) => !seen.has(y)).length;
+    const n = nb(s).filter((x) => !seen.has(x)).sort((a, b) => free(a) - free(b))[0];
+    if (n === undefined) break;
+    seen.add(n); path.push(n); s = n;
+  }
+  return path;
+})();
 const boots: Record<string, Boot> = {
   "/current": { cmd: "cd ~/research && cat gamma", lines: ["queue open", "boarding", "wait, or sail?"], dir: "fill" },
   "/": { cmd: "cd ~", lines: ["ferry docked", "the pier is quiet"], dir: "drain" },
+  "/projects/chess-engine": { cmd: "cd ~/chess-engine && python main.py", lines: ["no library to blame", "one knight, every square"], dir: "fill", pal: RED, board: true },
+  "/projects/chess-engine>/": { cmd: "cd ~", lines: ["board folded", "pieces back in the box"], dir: "drain", pal: RED, board: true },
 };
 const fallback: Boot = { cmd: "cd ..", lines: ["one moment"], dir: "fill" };
 
@@ -33,6 +49,9 @@ export function Gate() {
   const pctEl = useRef<HTMLParagraphElement>(null);
   const lineEls = useRef<HTMLParagraphElement[]>([]);
   const seatEls = useRef<HTMLSpanElement[]>([]);
+  const boardEls = useRef<HTMLSpanElement[]>([]);
+  const seatWrap = useRef<HTMLDivElement>(null);
+  const boardWrap = useRef<HTMLDivElement>(null);
   const api = useRef<{ settle: () => void } | null>(null);
   const pending = useRef<{ path: string; done: () => void } | null>(null);
   const busy = useRef(false);
@@ -44,6 +63,7 @@ export function Gate() {
     const S = { c: 0, mode: "in" as "in" | "out" };
     let cells: Cell[] = [];
 
+    let pal = GREENS;
     const build = (ox: number, oy: number) => {
       const W = innerWidth, H = innerHeight;
       c.width = W;
@@ -53,7 +73,7 @@ export function Gate() {
       for (let x = 0; x < W; x += CELL)
         for (let y = 0; y < H; y += CELL) {
           const d = Math.hypot(x + CELL / 2 - ox, y + CELL / 2 - oy);
-          cells.push({ x, y, t: (d / maxD) * 0.82 + Math.random() * 0.18, col: GREENS[(Math.random() * GREENS.length) | 0], r: Math.random() });
+          cells.push({ x, y, t: (d / maxD) * 0.82 + Math.random() * 0.18, col: pal[(Math.random() * pal.length) | 0], r: Math.random() });
         }
     };
 
@@ -80,12 +100,22 @@ export function Gate() {
       cmdEl.current!.textContent = "";
       lineEls.current.forEach((l, i) => { l.textContent = b.lines[i] ?? ""; gsap.set(l, { opacity: 0 }); });
       seatEls.current.forEach((s) => (s.style.background = OFF));
+      boardEls.current.forEach((s, i) => (s.style.background = ((i >> 3) + i) % 2 ? "#161616" : "#0c0c0c"));
+      seatWrap.current!.style.display = b.board ? "none" : "flex";
+      boardWrap.current!.style.display = b.board ? "grid" : "none";
       pctEl.current!.textContent = "";
     };
 
     // the loader is the ferry: seats fill green to yellow to red, or drain on the way back
-    const paintBar = (p: number, dir: Boot["dir"]) => {
-      const level = dir === "fill" ? p : 1 - p;
+    const paintBar = (p: number, b: Boot) => {
+      const level = b.dir === "fill" ? p : 1 - p;
+      if (b.board) {
+        const n = Math.round(level * TOUR.length), cur = TOUR[n - 1];
+        boardEls.current.forEach((s, i) => { const k = TOUR.indexOf(i); s.style.background = i === cur ? "#fff" : k >= 0 && k < n ? (b.pal ?? GREENS)[0] : ((i >> 3) + i) % 2 ? "#161616" : "#0c0c0c"; });
+        pctEl.current!.textContent = `${n}/64`;
+        pctEl.current!.style.color = (b.pal ?? GREENS)[0];
+        return;
+      }
       const on = Math.round(level * SEATS);
       seatEls.current.forEach((s, i) => (s.style.background = i < on ? seatColor(i / SEATS) : OFF));
       pctEl.current!.textContent = `deck ${Math.round(level * 100)}%`;
@@ -98,13 +128,13 @@ export function Gate() {
       tl.set(term.current, { opacity: 1 })
         .to(ty, { n: b.cmd.length, duration: b.cmd.length * 0.016, ease: "none", onUpdate: () => { cmdEl.current!.textContent = b.cmd.slice(0, Math.ceil(ty.n)); } })
         .to(lineEls.current.slice(0, b.lines.length), { opacity: 1, duration: 0.01, stagger: 0.14 }, ">0.05")
-        .to(bar, { p: 1, duration: 0.8, ease: "power1.inOut", onUpdate: () => paintBar(bar.p, b.dir) }, "<");
+        .to(bar, { p: 1, duration: 0.8, ease: "power1.inOut", onUpdate: () => paintBar(bar.p, b) }, "<");
       return tl;
     };
 
     const reveal = () => {
       gsap.to(term.current, { opacity: 0, y: -12, duration: 0.25, ease: "power2.in" });
-      build(innerWidth / 2, innerHeight / 2);
+      build(innerWidth / 2, innerHeight / 2); // keeps the palette of the page we just covered with
       S.mode = "out";
       S.c = -0.3;
       draw(); // paint before the browser does, so there is never a bare frame
@@ -116,9 +146,10 @@ export function Gate() {
 
     const run = (href: string, ox: number, oy: number) => {
       const url = new URL(href, location.href);
-      const b = boots[url.pathname] ?? fallback;
+      const b = boots[location.pathname + ">" + url.pathname] ?? boots[url.pathname] ?? fallback;
       busy.current = true;
       resetTerm(b);
+      pal = b.pal ?? GREENS;
       build(ox, oy);
       S.mode = "in";
       S.c = 0;
@@ -137,7 +168,7 @@ export function Gate() {
 
     // back / forward / anything we did not start: still burn the new page in
     api.current = {
-      settle: () => { busy.current = true; resetTerm(fallback); show(); reveal(); },
+      settle: () => { busy.current = true; pal = GREENS; resetTerm(fallback); show(); reveal(); },
     };
 
     const onClick = (e: MouseEvent) => {
@@ -185,7 +216,12 @@ export function Gate() {
         <div className="mt-3 space-y-1" style={{ color: "#0dbc79" }}>
           {[0, 1, 2].map((i) => <p key={i} ref={(el) => { if (el) lineEls.current[i] = el; }} />)}
         </div>
-        <div className="mt-6 flex max-w-lg gap-[3px]">
+        <div ref={boardWrap} className="mt-6 grid-cols-8" style={{ display: "none", width: "min(44vw, 176px)" }}>
+          {Array.from({ length: 64 }, (_, i) => (
+            <span key={i} ref={(el) => { if (el) boardEls.current[i] = el; }} className="aspect-square" />
+          ))}
+        </div>
+        <div ref={seatWrap} className="mt-6 flex max-w-lg gap-[3px]">
           {Array.from({ length: SEATS }, (_, i) => (
             <span key={i} ref={(el) => { if (el) seatEls.current[i] = el; }} className="h-3 flex-1" style={{ background: OFF }} />
           ))}

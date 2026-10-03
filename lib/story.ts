@@ -20,9 +20,15 @@ export const research = {
 export const chapters: Chapter[] = [
   {
     name: "gpu-queue", path: "~/DES_GPUQueueingModel", ext: "c", color: C.g,
-    href: "https://github.com/Granted07/DES_GPUQueueingModel",
+    href: "/current",
     lines: ["A simulator of requests queuing on a GPU that runs a neural network.", "Batch times come from real GoogLeNet runs, then get replayed under different loads."],
     code: "mean = slope * b + intercept;\ndeparture = start + gamma(mean, cov);",
+  },
+  {
+    name: "chess-engine", path: "~/chess-engine", ext: "py", color: C.r,
+    href: "/projects/chess-engine",
+    lines: ["A chess engine in Python, written without a chess library.", "Handles castling and en passant."],
+    code: "moves = legal(board)\nboard.push(best(moves))",
   },
   {
     name: "nn-in-c", path: "~/NeuralNetworkInC", ext: "c", color: C.y,
@@ -47,12 +53,6 @@ export const chapters: Chapter[] = [
     href: "https://genuprising.com",
     lines: ["The website for GenUprising, an advocacy group.", "Built with Next.js and a Supabase database. Caching keeps pages under 200ms."],
     code: "cache → edge → 200ms",
-  },
-  {
-    name: "chess-engine", path: "~/chess-engine", ext: "py", color: C.r,
-    href: "https://github.com/Granted07/Chess-Engine-Python",
-    lines: ["A chess engine in Python, written without a chess library.", "Handles castling and en passant."],
-    code: "moves = legal(board)\nboard.push(best(moves))",
   },
   {
     name: "repak-rebnk", path: "~/repak-rebnk", ext: "rs", color: C.y,
