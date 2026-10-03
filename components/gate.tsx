@@ -13,6 +13,7 @@ const OFF = "#1a1a1a";
 const seatColor = (p: number) => (p < 0.6 ? "#0dbc79" : p < 0.85 ? "#e5e510" : "#cd3131"); // same thresholds as the deck HUD
 
 const RED = ["#cd3131", "#8f2323", "#5f1717"];
+const YEL = ["#e5e510", "#a8a80b", "#6f6f07"];
 type Boot = { cmd: string; lines: string[]; dir: "fill" | "drain"; pal?: string[]; board?: boolean };
 
 // a knight visits every square once (Warnsdorff); the loader is that walk
@@ -30,8 +31,12 @@ const TOUR = (() => {
 const boots: Record<string, Boot> = {
   "/current": { cmd: "cd ~/research && cat gamma", lines: ["queue open", "boarding", "wait, or sail?"], dir: "fill" },
   "/": { cmd: "cd ~", lines: ["ferry docked", "the pier is quiet"], dir: "drain" },
+  "/projects/des-gpu-queueing-model": { cmd: "cd ~/research && cat gamma", lines: ["queue open", "boarding", "wait, or sail?"], dir: "fill" },
+  "/projects/des-gpu-queueing-model>/": { cmd: "cd ~", lines: ["ferry docked", "the pier is quiet"], dir: "drain" },
   "/projects/chess-engine": { cmd: "cd ~/chess-engine && python main.py", lines: ["no library to blame", "one knight, every square"], dir: "fill", pal: RED, board: true },
   "/projects/chess-engine>/": { cmd: "cd ~", lines: ["board folded", "pieces back in the box"], dir: "drain", pal: RED, board: true },
+  "/projects/neural-network-in-c": { cmd: "cmake --build build && ctest", lines: ["matrices allocated", "weights in [-1, 1]", "all tests passed"], dir: "fill", pal: YEL },
+  "/projects/neural-network-in-c>/": { cmd: "network_free(network);", lines: ["layers freed", "memory returned"], dir: "drain", pal: YEL },
 };
 const fallback: Boot = { cmd: "cd ..", lines: ["one moment"], dir: "fill" };
 

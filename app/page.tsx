@@ -88,7 +88,7 @@ export default function Home() {
           <pre className="rv overflow-x-auto border border-white/15 bg-black/50 p-5 text-xs leading-6 text-foreground/80 md:text-sm">{research.code}</pre>
         </div>
         <p className="rv mt-10 text-dim">{research.teaser}</p>
-        <Link href="/current" className="rv mt-3 w-fit border-b pb-1" style={{ color: "#0dbc79", borderColor: "#0dbc79" }}>
+        <Link href={research.href} className="rv mt-3 w-fit border-b pb-1" style={{ color: "#0dbc79", borderColor: "#0dbc79" }}>
           cd ~/research && cat gamma →
         </Link>
       </PixelCard>

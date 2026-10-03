@@ -18,8 +18,8 @@ function Col({ r, c, v }: { r: number; c: number; v: number }) {
   return (
     <mesh ref={m} position={[c - 3.5, 0, r - 3.5]}>
       <boxGeometry args={[0.82, 1, 0.82]} />
-      <meshBasicMaterial color={col} transparent opacity={0.14} />
-      <Edges color={col} />
+      <meshBasicMaterial color={col} transparent opacity={0.1} />
+      <Edges color={col} transparent opacity={0.4} />
     </mesh>
   );
 }

@@ -3,7 +3,7 @@ export type Chapter = { name: string; path: string; ext: string; href: string; c
 const C = { r: "#cd3131", g: "#0dbc79", y: "#e5e510", b: "#2472c8", m: "#bc3fbc", c: "#11a8cd" };
 
 export const research = {
-  href: "/current",
+  href: "/projects/des-gpu-queueing-model",
   teaser: "A GPU answers in groups. How long should it wait for a fuller ferry?",
   lines: [
     "Research on reducing latency when neural networks are served on GPUs.",
@@ -20,7 +20,7 @@ export const research = {
 export const chapters: Chapter[] = [
   {
     name: "gpu-queue", path: "~/DES_GPUQueueingModel", ext: "c", color: C.g,
-    href: "/current",
+    href: "/projects/des-gpu-queueing-model",
     lines: ["A simulator of requests queuing on a GPU that runs a neural network.", "Batch times come from real GoogLeNet runs, then get replayed under different loads."],
     code: "mean = slope * b + intercept;\ndeparture = start + gamma(mean, cov);",
   },
@@ -32,7 +32,7 @@ export const chapters: Chapter[] = [
   },
   {
     name: "nn-in-c", path: "~/NeuralNetworkInC", ext: "c", color: C.y,
-    href: "https://github.com/Granted07/NeuralNetworkInC",
+    href: "/projects/neural-network-in-c",
     lines: ["A small neural network library in C.", "Matrices, layers and training are written by hand, with no outside libraries."],
     code: "z = W x + b\na = act(z)\nW -= lr * dL/dz * xᵀ",
   },
