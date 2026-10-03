@@ -104,7 +104,7 @@ export default function Home() {
                   {c.lines.map((l) => <p key={l} className="line">{l}</p>)}
                 </div>
                 <pre className="mt-8 hidden border-l-2 pl-4 text-sm text-dim md:block" style={{ borderColor: c.color }}>{c.code}</pre>
-                <a href={c.href} target="_blank" rel="noreferrer" className="mt-8 inline-block border-b pb-1" style={{ borderColor: c.color }}>open →</a>
+                <a href={c.href} target={c.href.startsWith("/") ? undefined : "_blank"} rel="noreferrer" className="mt-8 inline-block border-b pb-1" style={{ borderColor: c.color }}>open →</a>
               </div>
             </article>
           ))}
