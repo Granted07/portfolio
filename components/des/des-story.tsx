@@ -39,7 +39,7 @@ const caveats = [
 export function DESStory() {
   const root = useRef<HTMLDivElement>(null);
   const [hero] = useState<Ctl>(() => ({ sim: makeSim({ ...DEFAULT, lambda: 160, b: 8, N: 32 }, 7, true), speed: 250, run: true }));
-  const [lab] = useState<Ctl>(() => ({ sim: makeSim(DEFAULT, 1, true), speed: 200, run: true }));
+  const [lab] = useState<Ctl>(() => ({ sim: makeSim(DEFAULT, 1, true), speed: 6, run: true }));
 
   useEffect(() => {
     const ctx = gsap.context(() => {

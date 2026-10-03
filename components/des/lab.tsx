@@ -10,14 +10,21 @@ const QueueScene = dynamic(() => import("@/components/des/queue-scene"), { ssr: 
 const G = "#0dbc79", Y = "#e5e510", R = "#cd3131";
 
 const presets: { name: string; patch: Partial<Cfg> }[] = [
-  { name: "calm", patch: { lambda: 120, a: 1, b: 8, N: 24, cov: 0.5, pHit: 0 } },
+  { name: "calm", patch: { lambda: 1000, a: 5, b: 40, N: 24, cov: 0.5, pHit: 0 } },
   { name: "crowded", patch: { lambda: 900, a: 1, b: 8, N: 24, cov: 0.5, pHit: 0 } },
   { name: "make it wait for 8", patch: { lambda: 60, a: 8, b: 16, N: 24, cov: 0.5, pHit: 0 } },
   { name: "unpredictable GPU", patch: { lambda: 300, a: 1, b: 16, N: 32, cov: 1.4, pHit: 0 } },
 ];
 
+
 export function Lab({ ctl }: { ctl: Ctl }) {
-  const [cfg, setCfg] = useState<Cfg>(ctl.sim.cfg);
+  const calmPatch = presets.find((p) => p.name === "calm")?.patch || {};
+  const initialCfg: Cfg = { ...ctl.sim.cfg, ...calmPatch };
+  const [cfg, setCfg] = useState<Cfg>(() => {
+    // Apply calm patch to simulation instance on load
+    ctl.sim = makeSim(initialCfg, 1, true);
+    return initialCfg;
+  });
   const [seed, setSeed] = useState(1);
   const [run, setRun] = useState(true);
   const [speed, setSpeed] = useState(ctl.speed);
